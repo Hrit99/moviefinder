@@ -4,30 +4,45 @@ const router = require('./routes/router')
 const { default: mongoose } = require('mongoose')
 const uri = "mongodb+srv://hritik:DV3zW2dyz5sd8Dd4@cluster0.7xhuq.mongodb.net/moviefinder?retryWrites=true&w=majority";
 const bodyParser = require('body-parser');
+const path = require('path')
+const compression = require("compression");
+const helmet = require("helmet");
 
 const app = express()
+
+app.set('view engine', 'ejs');
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors())
+app.use(compression());
+app.use('/static', express.static(path.join(__dirname, 'public')))
 
-// mongoose.connect(uri, {useNewUrlParser:true, useUnifiedTopology:true})
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      "script-src": ["'self'", "code.jquery.com", "cdn.jsdelivr.net"],
+    },
+  }),
+);
 
-// const db = mongoose.connection
+mongoose.connect(uri, {useNewUrlParser:true, useUnifiedTopology:true})
 
-// db.on('error', (err)=>{
-//   console.log(err);
-// })
+const db = mongoose.connection
 
-// db.once('open', () => {
-//   console.log('Database connected');
-// })
+db.on('error', (err)=>{
+  console.log(err);
+})
 
-// app.use((req,res,next)=>{
-//     res.setHeader('Access-Control-Allow-Origin', '*');
-//     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
-//     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-//     next();
-// })
+db.once('open', () => {
+  console.log('Database connected');
+})
+
+app.use((req,res,next)=>{
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    next();
+})
 
 // //routing
 // app.use(router)
