@@ -10,26 +10,31 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors())
 
-mongoose.connect(uri, {useNewUrlParser:true, useUnifiedTopology:true})
+// mongoose.connect(uri, {useNewUrlParser:true, useUnifiedTopology:true})
 
-const db = mongoose.connection
+// const db = mongoose.connection
 
-db.on('error', (err)=>{
-  console.log(err);
-})
+// db.on('error', (err)=>{
+//   console.log(err);
+// })
 
-db.once('open', () => {
-  console.log('Database connected');
-})
+// db.once('open', () => {
+//   console.log('Database connected');
+// })
 
-app.use((req,res,next)=>{
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    next();
-})
+// app.use((req,res,next)=>{
+//     res.setHeader('Access-Control-Allow-Origin', '*');
+//     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
+//     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+//     next();
+// })
 
-//routing
-app.use(router)
-
+// //routing
+// app.use(router)
+app.get("/", (req, res) => {
+    res.send("Express on Vercel");
+  });
+  
 app.listen(3000)
+
+module.exports = app;
