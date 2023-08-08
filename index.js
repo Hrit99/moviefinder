@@ -36,7 +36,7 @@ db.on('error', (err)=>{
 })
 
 db.once('open', () => {
-  console.log('Database connected');
+  console.log('Database connected done');
 })
 
 app.use((req,res,next)=>{
