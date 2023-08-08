@@ -1,7 +1,7 @@
 const { signupQuery, checkUserExistsQuery } = require("../dbqueries/authQueries")
 const { createJWT, decodeJWT } = require("../utilities/jwt")
 
-const signup = async (req, res) => {
+const signup = async (req, res, next) => {
     console.log("in signup api")
     let email = req.body.email
     let password = req.body.password
@@ -27,7 +27,7 @@ const signup = async (req, res) => {
     })
 }
 
-const signInWithToken = async (req, res) => {
+const signInWithToken = async (req, res, next) => {
     let decodedjwt = decodeJWT(req.body.token)
     try{
     if(decodedjwt.role == 'user'){
@@ -49,7 +49,7 @@ catch{
 }
 }
 
-const signInWithoutToken = async (req, res) => {
+const signInWithoutToken = async (req, res, next) => {
     let email = req.body.email
     let password = req.body.password
 
