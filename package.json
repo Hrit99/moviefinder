@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "node index.js",
     "start": "node index.js",
-    "build": "npm install"
+    "build": "npm install --production --omit=dev"
   },
   "author": "",
   "license": "ISC",
